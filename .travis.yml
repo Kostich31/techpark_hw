@@ -1,0 +1,31 @@
+dist: trusty 
+sudo: required
+
+language: c
+
+os:
+  - linux
+compiler: 
+  - gcc
+addons:
+  apt:
+    packages:
+      - cmake
+      - valgrind
+      - cppcheck
+before_script:
+  - sudo apt-get install -y libgtest-dev
+  - cd /usr/src/gtest
+  - sudo cmake CMakeLists.txt
+  - sudo make
+  - sudo cp *.a /usr/lib
+  - cd "${TRAVIS_BUILD_DIR}"
+  - cmake .
+  - make
+
+script:
+  - valgrind --track-origins=yes --leak-check=full ./tests
+  - cppcheck --enable=warning,performance,portability,style --language=c++ ./prog
+  - cd "${TRAVIS_BUILD_DIR}"
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
