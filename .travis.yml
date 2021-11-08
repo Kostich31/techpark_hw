@@ -27,7 +27,7 @@ script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
   - valgrind --track-origins=yes --leak-check=full ./test_dynamic
   - cppcheck --enable=warning,performance,style --language=c++ ./test_static
-  - cppcheck --enable=warning,performance, style --language=c++ ./test_dynamic
+  - cppcheck --enable=warning,performance,style --language=c++ ./test_dynamic
   - ./stress_test
   
 after_success:
