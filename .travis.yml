@@ -15,7 +15,6 @@ addons:
       - cppcheck
 before_script:
   - sudo apt-get install -y libgtest-dev
-  - sudo apt-get install -y --allow-unauthenticated cppcheck
   - cd /usr/src/gtest
   - sudo cmake CMakeLists.txt
   - sudo make
@@ -27,8 +26,8 @@ before_script:
 script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
   - valgrind --track-origins=yes --leak-check=full ./test_dynamic
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_static
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_dynamic
+  - cppcheck --enable=warning,performance,portability,style --language=c ./test_static
+  - cppcheck --enable=warning,performance,portability,style --language=c ./test_dynamic
   - ./stress_test
   
 after_success:
