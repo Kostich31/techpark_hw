@@ -111,7 +111,7 @@ TEST(read, FileReading){
     create(&data,1);
     ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"),&data),0);
     ASSERT_EQ(data.size, 10000);
-    ASSERT_EQ(free_data(&data),0);
+    ASSERT_EQ(free_data(&data), 0);
 }
 
 TEST(read, IncorrectFileOpening){
@@ -277,6 +277,7 @@ TEST(data, IncorrectFindByPosition){
     free_data(&data);
 }
 int main(int argc, char** argv) {
+    chdir("/");
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
