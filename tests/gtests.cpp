@@ -110,7 +110,7 @@ TEST(read, FileReading){
     chdir("/");
     workers_data data;
     create(&data,1);
-    ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"),&data),0);
+    ASSERT_EQ(read_from_file(const_cast<char*>("/home/travis/build/Kostich31/techpark_hw/tests/test10k.bin"),&data),0);
     ASSERT_EQ(data.size, 10000);
     ASSERT_EQ(free_data(&data), 0);
 }
