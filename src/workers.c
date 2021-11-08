@@ -98,7 +98,7 @@ int read_from_file(const char* file_name, workers_data* data){
         fprintf(stderr, "Incorrecct data pointer\n");
         return -1;
     }
-    FILE*f = fopen(file_name, "rb");
+    FILE* f = fopen(file_name, "rb");
     if(!f){
         fprintf(stderr, "Failed to open file for read\n");
         return -1;

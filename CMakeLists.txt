@@ -7,6 +7,8 @@ set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 
 include_directories(include)
+include_directories(tests)
+
 add_library(workers_static STATIC  
     src/consistent_search.c
     include/workers.h
@@ -20,6 +22,7 @@ add_library(workers_dynamic SHARED
     include/parallel_search.h)
     
 add_executable(stress_test tests/stress_test.c)
+target_include_directories(stress_test PUBLIC tests)
 target_link_libraries(stress_test workers_static)
 target_link_libraries(stress_test workers_dynamic ${CMAKE_DL_LIBS})
 
@@ -38,6 +41,3 @@ add_executable(test_dynamic
     tests/gtests.cpp)
 target_link_libraries(test_dynamic workers_dynamic)
 target_link_libraries(test_dynamic gtest ${CMAKE_THREAD_LIBS_INIT})
-
-add_test(gtests ./test_static)
-add_test(gtests ./test_dynamic)

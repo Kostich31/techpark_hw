@@ -106,13 +106,13 @@ TEST(data, IncorrectFree){
     ASSERT_EQ(free_data(NULL),-1);
 }
 
-// TEST(read, FileReading){
-//     workers_data data;
-//     create(&data,1);
-//     ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"),&data),0);
-//     ASSERT_EQ(data.size, 10000);
-//     ASSERT_EQ(free_data(&data),0);
-// }
+TEST(read, FileReading){
+    workers_data data;
+    create(&data,1);
+    ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"),&data),0);
+    ASSERT_EQ(data.size, 10000);
+    ASSERT_EQ(free_data(&data),0);
+}
 
 TEST(read, IncorrectFileOpening){
     ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"), NULL),-1);
