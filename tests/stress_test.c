@@ -9,7 +9,7 @@ int main(){
     workers_data data;
     if(create(&data, ARRAY_DEFAULT_SIZE) == -1) return -1;
 
-    char* file_name = "/home/travis/build/Kostich31/techpark_hw/tests/test10k.bin";
+    char* file_name = "/techpark_hw/tests/test10k.bin";
     if(read_from_file(file_name, &data) == -1) return -1;
 
     workers_data search_result;
