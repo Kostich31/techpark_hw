@@ -19,10 +19,10 @@ before_script:
   - sudo cmake CMakeLists.txt
   - sudo make
   - sudo cp *.a /usr/lib
-  - cd "${TRAVIS_BUILD_DIR}"
-  - cmake .
+  - mkdir build && cd build
+  - cmake ..
   - make
-  - cp  ../tests/test10k.bin .
+  - cp ../tests/test10k.bin .
 
 script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
