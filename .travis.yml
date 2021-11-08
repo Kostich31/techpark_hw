@@ -20,9 +20,9 @@ before_script:
   - sudo make
   - sudo cp *.a /usr/lib
   - sudo mkdir build && cd build
-  - cmake ..
-  - make
-  - cp ../tests/test10k.bin .
+  - sudo cmake ..
+  - sudo make
+  - sudo cp ../tests/test10k.bin .
 
 script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
