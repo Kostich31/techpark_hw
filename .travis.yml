@@ -14,13 +14,10 @@ addons:
       - valgrind
       - cppcheck
 before_script:
-  - sudo apt-get install -y libgtest-dev
-  - cd /usr/src/gtest
-  - sudo cmake CMakeLists.txt
-  - sudo make
-  - sudo cp *.a /usr/lib
-  - cmake .
+  - mkdir build && cd build
+  - cmake ..
   - make
+  - cp ../tests/test10k.bin
 
 script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
