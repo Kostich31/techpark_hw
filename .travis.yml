@@ -15,8 +15,8 @@ addons:
       - cppcheck
 before_script:
   - sudo apt-get install -y libgtest-dev
-  - sudo apt-get install cppcheck
-  - sudo apt-get upgrade cppcheck
+  - sudo apt-get install -y cppcheck
+  - sudo apt-get upgrade -y cppcheck
   - cd /usr/src/gtest
   - sudo cmake CMakeLists.txt
   - sudo make
