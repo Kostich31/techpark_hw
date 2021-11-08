@@ -1,28 +1,40 @@
 cmake_minimum_required(VERSION 3.8)
-project(schedule)
+project(database)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_C_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
-set(CMAKE_CXX_FLAGS "-pedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_C_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
+set(CMAKE_CXX_FLAGS "-Wall -Werror -Wpedantic -fprofile-arcs -ftest-coverage")
 
-set(LIB_SOURCE_FILES src/schedule.c)
-add_Library(study_std_lib STATIC ${LIB_SOURCE_FILES})
 include_directories(include)
-include_directories(src)
+add_library(workers_static STATIC  
+    src/consistent_search.c
+    include/workers.h
+    src/workers.c
+    include/consistent_search.h)
 
-add_executable(prog
-    include/schedule.h  
-    src/main.c)
-target_link_libraries(prog study_std_lib)
-
+add_library(workers_dynamic SHARED
+    src/parallel_search.c
+    include/workers.h
+    src/workers.c
+    include/parallel_search.h)
+    
+add_executable(stress_test tests/stress_test.c)
+target_link_libraries(stress_test workers_static)
+target_link_libraries(stress_test workers_dynamic ${CMAKE_DL_LIBS})
 
 enable_testing()
+
 find_package(GTest REQUIRED)
 
 include_directories(${GTEST_INCLUDE_DIR})
 message(${GTEST_LIBRARIES})
-add_executable(tests src/tests.cpp)
+add_executable(test_static
+    tests/gtests.cpp)
+target_link_libraries(test_static workers_static)
+target_link_libraries(test_static gtest ${CMAKE_THREAD_LIBS_INIT})
 
-target_link_libraries(tests ${GTEST_LIBRARIES} -lpthread)
-target_link_libraries(tests study_std_lib)
+add_executable(test_dynamic
+    tests/gtests.cpp)
+target_link_libraries(test_dynamic workers_dynamic)
+target_link_libraries(test_dynamic gtest ${CMAKE_THREAD_LIBS_INIT})

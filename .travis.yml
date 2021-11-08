@@ -24,8 +24,12 @@ before_script:
   - make
 
 script:
-  - valgrind --track-origins=yes --leak-check=full ./tests
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./prog
+  - valgrind --track-origins=yes --leak-check=full ./test_static
+  - valgrind --track-origins=yes --leak-check=full ./test_dynamic
+  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_static
+  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_dynamic
+  - valgrind --track-origins=yes --leak-check=full ./stress_test
+  - valgrind --track-origins=yes --leak-check=full ./stress_test
   - cd "${TRAVIS_BUILD_DIR}"
   
 after_success:
