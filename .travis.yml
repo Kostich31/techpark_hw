@@ -26,10 +26,10 @@ before_script:
 script:
   - valgrind --track-origins=yes --leak-check=full ./test_static
   - valgrind --track-origins=yes --leak-check=full ./test_dynamic
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_static
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_dynamic
+  - cppcheck --enable=warning,performance,portability ./test_static
+  - cppcheck --enable=warning,performance,portability ./test_dynamic
   - valgrind --track-origins=yes --leak-check=full ./stress_test
-  - cppcheck --enable=warning,performance,portability,style --language=c++ ./stress_test
+  - cppcheck --enable=warning,performance,portability,style --language=c ./stress_test
   
 after_success:
   - bash <(curl -s https://codecov.io/bash)
