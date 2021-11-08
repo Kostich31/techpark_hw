@@ -117,7 +117,7 @@ TEST(read, IncorrectFileOpening){
     ASSERT_EQ(read_from_file(const_cast<char*>("../tests/test10k.bin"),NULL),-1);
     workers_data data;
     create(&data, 1);
-    ASSERT_EQ(read_from_file("",&data),-1);
+    ASSERT_EQ(read_from_file(const_cast<char*>(""),&data),-1);
     free_data(&data);
 }
 
