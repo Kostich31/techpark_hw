@@ -109,7 +109,7 @@ TEST(data, IncorrectFree){
 TEST(read, FileReading){
     workers_data data;
     create(&data,1);
-    ASSERT_EQ(read_from_file(const_cast<char*>("../techpark_hw/tests/test10k.bin"),&data),0);
+    ASSERT_EQ(read_from_file(const_cast<char*>("/home/travis/build/Kostich31techpark_hw/tests/test10k.bin"),&data),0);
     ASSERT_EQ(data.size, 10000);
     ASSERT_EQ(free_data(&data), 0);
 }
