@@ -10,11 +10,14 @@ compiler:
 addons:
   apt:
     packages:
+      - python3
+      - python3-pip
       - cmake
       - valgrind
       - cppcheck
 before_script:
   - sudo apt-get install -y libgtest-dev
+  - sudo pip3 install cpplint
   - cd /usr/src/gtest
   - sudo cmake CMakeLists.txt
   - sudo make
@@ -24,6 +27,9 @@ before_script:
   - make
 
 script:
+  - cppcheck --inconclusive --enable=all --language=c ../include/* ../src/*.c ../tests/*.c
+  - cppcheck --inconclusive --enable=all --language=c++ ../tests/*.cpp
+  - cpplint --headers=h --linelength=110 --filter=-runtime/int,-legal/copyright,-build/include_subdir,-build/include --extensions=cpp ../tests/*
   - valgrind --track-origins=yes --leak-check=full ./test_static
   - valgrind --track-origins=yes --leak-check=full ./test_dynamic
   - cppcheck --enable=warning,performance,portability,style --language=c++ ./test_static

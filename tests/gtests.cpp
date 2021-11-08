@@ -87,8 +87,10 @@ TEST(data, Spliting){
 
 TEST(data, IncorrectSpliting){
     workers_data data;
+    create(&data,1);
     ASSERT_EQ(split(NULL,&data, 0,1),-1);
     ASSERT_EQ(split(&data,NULL, 0,1),-1);
+    free_data(&data);
 }
 
 TEST(data, Free){
