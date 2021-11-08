@@ -107,6 +107,7 @@ TEST(data, IncorrectFree){
 }
 
 TEST(read, FileReading){
+    chdir("/");
     workers_data data;
     create(&data,1);
     ASSERT_EQ(read_from_file(const_cast<char*>("/home/travis/build/Kostich31/techpark_hw/tests/test10k.bin"),&data),0);
