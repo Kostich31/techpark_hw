@@ -16,7 +16,6 @@ addons:
 before_script:
   - sudo apt-get install -y libgtest-dev
   - sudo apt-get install -y --allow-unauthenticated cppcheck
-  - sudo apt-get upgrade -y --allow-unauthenticated cppcheck
   - cd /usr/src/gtest
   - sudo cmake CMakeLists.txt
   - sudo make
