@@ -19,7 +19,7 @@ before_script:
   - sudo cmake CMakeLists.txt
   - sudo make
   - sudo cp *.a /usr/lib
-  - mkdir build && cd build
+  - sudo mkdir build && cd build
   - cmake ..
   - make
   - cp ../tests/test10k.bin .
