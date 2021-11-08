@@ -38,3 +38,6 @@ add_executable(test_dynamic
     tests/gtests.cpp)
 target_link_libraries(test_dynamic workers_dynamic)
 target_link_libraries(test_dynamic gtest ${CMAKE_THREAD_LIBS_INIT})
+
+add_test(gtests ./test_static)
+add_test(gtests ./test_dynamic)
