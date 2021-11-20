@@ -56,7 +56,7 @@ int search(workers_data *data, workers_data *output_data) {
         else if (pid == 0) {
             // Должности, с которыми работает текущий процесс
             workers_data proc_workers;
-            if (create(&proc_workers, positions_per_proc) == -1) exit(-1);
+            if (create(&proc_workers, positions_per_proc) == -1) exit(1);
 
             // Считаем количество должностей для текущего процесса
             proc_info info = {
@@ -72,30 +72,30 @@ int search(workers_data *data, workers_data *output_data) {
             }
             // Создаем массив найденных процессом сотрудников
             workers_data proc_result;
-            if (create(&proc_result, proc_workers.size*2) == -1) exit(-1);
+            if (create(&proc_result, proc_workers.size*2) == -1) exit(1);
 
             // Проходим по массиву выделенных процессу сотрудников
             for (size_t proc_positions_idx = 0; proc_positions_idx < proc_workers.size; proc_positions_idx++) {
                 // Находим самого пожилого сотрудника
                 Workers max_age_employee;
                 if(find_max_age_by_position(data, proc_workers.w_data[proc_positions_idx].position, &max_age_employee) != 0) {
-                    exit(-1);
+                    exit(2);
                 }
-                if (insert(&proc_result, max_age_employee) == -1) exit(-1);
+                if (insert(&proc_result, max_age_employee) == -1) exit(3);
 
                 // Находим самого молодого сотрудника
                 Workers min_age_employee ;
                 if (find_min_age_by_position(data, proc_workers.w_data[proc_positions_idx].position, &min_age_employee) != 0) {
-                    exit(-1);
+                    exit(2);
                 }
-                if (insert(&proc_result, min_age_employee) == -1) exit(-1);
+                if (insert(&proc_result, min_age_employee) == -1) exit(3);
             }
 
             // Записываем полученные данные в shared memory
             Workers *shm_workers_per_proc = (Workers*)shmat(shmid, NULL, 0);
             if (shm_workers_per_proc == (void *) -1) {
                 fprintf(stderr, "Failed to attach shared memory\n");
-                exit(-1);
+                exit(4);
             }
             // Индекс относительно количества сотрудников в каждом процессе
             size_t shared_memory_start_idx = positions_per_proc * proc_idx*2;
@@ -107,8 +107,8 @@ int search(workers_data *data, workers_data *output_data) {
                 return -1;
             }
 
-            if (free_data(&proc_result) == -1) exit(-1);
-            if (free_data(&proc_workers) == -1) exit(-1);
+            if (free_data(&proc_result) == -1) exit(5);
+            if (free_data(&proc_workers) == -1) exit(5);
 
             exit(0);
         }

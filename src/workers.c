@@ -18,7 +18,12 @@ int insert(workers_data* data, const Workers worker){
 
     if(data->size == data->capacity){
         data->capacity*=2;
-        data->w_data = realloc(data->w_data, data->capacity*sizeof(Workers));
+        //Пытаемся выделить память повторно, если 
+        Workers* new_data;
+        do{
+            new_data = realloc(data->w_data, data->capacity*sizeof(Workers));
+        }while(new_data == NULL );
+        data->w_data = new_data;
     }
     data->w_data[data->size++] = worker;
     return 0;
